@@ -4,13 +4,15 @@ import logging
 import watchdog.observers
 import watchdog.events
 
+from db import DbClass
+from data_parse import Parse
+
 class Handler(watchdog.events.PatternMatchingEventHandler):
     def __init__(self):
         watchdog.events.PatternMatchingEventHandler.__init__(self, patterns=['*.txt'],
                                                              ignore_directories=True, case_sensitive=False)
         
     # This works for processing events after a file is created
-    # TODO: Set up DB upload functions and test
     # TODO: Figure out why two events fire after the file is created
     # TODO: Also figure out how to filter out files not created correctly
     def on_created(self, event)  :

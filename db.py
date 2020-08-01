@@ -3,6 +3,7 @@ import os
 
 from PIL import Image
 from dotenv import load_dotenv
+from data_parse import Parse
 
 # Load env and set up CONSTs
 load_dotenv()
@@ -12,7 +13,7 @@ DB_TABLE = os.getenv("DB_TABLE")
 DB_USER = os.getenv("DB_USER")
 DB_PWD = os.getenv("DB_PWD")
 
-class DB:
+class DbClass:
     
     # Get connector
     def DbConnect(usr, pwd, host, db):
@@ -41,9 +42,3 @@ class DB:
             print("Record Added")
         except mysql.connector.Error as er:
             print(er)
-          
-    # Convert image to binary data  
-    def ConvertToBin(file):
-        with open(file, 'rb') as file:
-            binaryData = file.read()
-        return binaryData
