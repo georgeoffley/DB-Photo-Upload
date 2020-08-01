@@ -26,11 +26,14 @@ class DB:
             return None
         
     def InsertPhotoRecord(con, data):
+        # Data must be in tuple form
+        # TODO: Check the data for the right formatting
         # Required vars
-        add_photo = "INSERT INTO `photo_db`.`machine_pics` (`machine_name`, `created_date`, `picture`) VALUES (%s, %s, %s);"
-        cursor = con.cursor()
+        add_photo = """INSERT INTO machine_pics (machine_name, created_date, picture) VALUES (%s, %s, %s)"""
         
+        # Insert record
         try:
+            cursor = con.cursor()
             cursor.execute(add_photo, data)
             con.commit()
             cursor.close()
@@ -38,16 +41,9 @@ class DB:
             print("Record Added")
         except mysql.connector.Error as er:
             print(er)
-    
-    
-con = DB.DbConnect(DB_USER, DB_PWD, DB_HOST, DB_NAME)
-
-img = Image.open(".\white.jpg")
-
-data = {
-    'machine_name' : 'machine1',
-    'created_date' : '2020-07-31 03:24:52',
-    'picture' : img,
-}
-
-DB.InsertPhotoRecord(con, data)
+          
+    # Convert image to binary data  
+    def ConvertToBin(file):
+        with open(file, 'rb') as file:
+            binaryData = file.read()
+        return binaryData
